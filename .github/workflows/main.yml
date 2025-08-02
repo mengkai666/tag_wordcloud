@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.10'
+        python-version: '3.8'
 
     - name: Install dependencies
       run: |
@@ -24,10 +24,10 @@ jobs:
 
     - name: Run script
       run: |
-        python your_script_name.py
+        python generate_wordcloud.py
 
     - name: Upload output to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./output  # 你要存放词云图的文件夹
+        publish_dir: ./  # 你要存放词云图的文件夹
