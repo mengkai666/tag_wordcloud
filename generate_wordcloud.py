@@ -197,7 +197,8 @@ if response.status_code == 200:
 
             # 保存文件
             current_directory = os.getcwd()
-            file_path = os.path.join(current_directory, file_name)
+            file_path ='stock_data1.xlsx'
+
             wb.save(file_path)
             print(f"文件已保存到 {file_path}")
 
