@@ -4,3 +4,13 @@ wordcloud
 openpyxl
 matplotlib
 pandas
+json
+requests
+hashlib
+time
+datetime 
+openpyxl.styles 
+collections 
+wordcloud 
+openpyxl.drawing.image 
+os
