@@ -172,13 +172,19 @@ try:
 
         counter = Counter(all_concepts)
 
+      
         wordcloud = WordCloud(
-             font_path='msyh.ttc',
+            font_path='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',
             background_color='white',
             width=800,
             height=400
         ).generate_from_frequencies(counter)
 
+
+
+
+
+        
         img_path = 'wordcloud.png'
         wordcloud.to_file(img_path)
 
