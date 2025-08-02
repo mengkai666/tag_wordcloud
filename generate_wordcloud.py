@@ -173,7 +173,7 @@ try:
         counter = Counter(all_concepts)
 
         wordcloud = WordCloud(
-            # font_path='msyh.ttc', # 如果没字体可以先注释掉
+             font_path='msyh.ttc',
             background_color='white',
             width=800,
             height=400
