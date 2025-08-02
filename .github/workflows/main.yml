@@ -44,3 +44,13 @@ jobs:
         path: |
           stock_data1.xlsx
           wordcloud.png
+
+    - name: Commit and push generated files
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+    
+        git add stock_data1.xlsx wordcloud.png
+        git commit -m "Auto-generated files on $(date '+%Y-%m-%d')"
+        git push origin main
+
