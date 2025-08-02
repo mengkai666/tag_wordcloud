@@ -6,7 +6,7 @@ matplotlib
 pandas
 
 requests
-hashlib
+
 time
 datetime 
 openpyxl.styles 
