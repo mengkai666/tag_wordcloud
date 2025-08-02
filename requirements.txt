@@ -4,7 +4,7 @@ wordcloud
 openpyxl
 matplotlib
 pandas
-json
+
 requests
 hashlib
 time
