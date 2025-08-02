@@ -66,6 +66,9 @@ if response.status_code == 200:
         plate_stock = response_data.get('data', {}).get('plate_stock', [])
         continuous_limit_up = response_data.get('data', {}).get('continuous_limit_up', [])
 
+        save_data_to_excel(plate_stock, continuous_limit_up, 'stock_data1.xlsx')
+
+
         if not plate_stock:
             print("未找到 plate_stock 数据")
         if not continuous_limit_up:
