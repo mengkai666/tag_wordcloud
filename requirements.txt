@@ -4,13 +4,10 @@ wordcloud
 openpyxl
 matplotlib
 pandas
-
 requests
 
 
 
-openpyxl.styles 
-collections 
-wordcloud 
-openpyxl.drawing.image 
+
+
 
