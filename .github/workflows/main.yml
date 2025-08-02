@@ -26,16 +26,10 @@ jobs:
       run: |
         python generate_wordcloud.py
 
-    - name: Upload Excel & 图像
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: 输出文件
-        path: |
-           stock_data1.xlsx
-
-
-    - name: Upload output to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./  # 你要存放词云图的文件夹
+       name: output-files
+       path: |
+        stock_data1.xlsx
+        wordcloud.png
