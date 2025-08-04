@@ -2,7 +2,7 @@ name: Daily Movie Wordcloud Task
 
 on:
   schedule:
-    - cron: '0 1 * * *'
+     - cron: '15 7 * * *'
   workflow_dispatch:
 
 jobs:
