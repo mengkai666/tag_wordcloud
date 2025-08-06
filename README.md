@@ -10,5 +10,4 @@
 
 
 
-![GitHub文件]（stock_data1.xlsx）
 
