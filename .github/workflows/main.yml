@@ -33,9 +33,9 @@ jobs:
         ls -l stock_data1.xlsx wordcloud.png || echo "文件未生成"
 
     # 👉 运行新增的 hotstock_wordcloud.py
-    - name: Run hotstock_wordcloud.py
+    - name: Run HotStock_v1.0.py
       run: |
-        python hotstock_wordcloud.py
+        python HotStock_v1.0.py
         ls -l HotStock_Top20_*.xlsx HotStock_WordCloud_*.png || echo "文件未生成"
 
     - name: Upload artifacts
