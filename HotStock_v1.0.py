@@ -125,7 +125,8 @@ def generate_wordcloud(file_path):
         height=400,
         background_color="white",
         colormap="tab10",
-        font_path=FONT_PATH
+        font_path=FONT_PATH,
+        dpi=900
     ).generate_from_frequencies(counter)
 
     font_prop = FontProperties(fname=FONT_PATH)
@@ -158,6 +159,7 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
 
 
 
