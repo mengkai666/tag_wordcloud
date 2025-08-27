@@ -17,6 +17,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y fonts-noto-cjk
+        sudo apt-get install fonts-wqy-zenhei
 
     - name: Set up Python
       uses: actions/setup-python@v2
