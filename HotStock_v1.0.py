@@ -5,6 +5,18 @@ from collections import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
+import os
+import platform
+
+if platform.system() == "Windows":
+    FONT_PATH = r"C:\Windows\Fonts\msyh.ttc"
+else:
+    FONT_PATH = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+
+
+
+
+
 # ---------------- 财联社 ----------------
 def fetch_cls_top20():
     url = "https://api3.cls.cn/v1/hot_stock"
@@ -102,12 +114,14 @@ def generate_wordcloud(file_path):
     all_stocks = weighted_list(cls_names) + weighted_list(eastmoney_names) + weighted_list(ths_names)
     counter = Counter(all_stocks)
 
+
+
     wc = WordCloud(
         width=800,
         height=400,
         background_color="white",
         colormap="tab10",
-        font_path=r"C:\Windows\Fonts\msyh.ttc"
+        font_path=FONT_PATH
     ).generate_from_frequencies(counter)
 
     plt.figure(figsize=(12, 6))
