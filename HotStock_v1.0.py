@@ -11,7 +11,8 @@ import platform
 if platform.system() == "Windows":
     FONT_PATH = r"C:\Windows\Fonts\msyh.ttc"
 else:
-    FONT_PATH = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+    FONT_PATH =   "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc"
+    
 
 
 
@@ -149,3 +150,4 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
