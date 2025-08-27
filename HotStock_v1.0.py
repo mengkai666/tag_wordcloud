@@ -5,6 +5,9 @@ from collections import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
+from matplotlib.font_manager import FontProperties
+
+
 import os
 import platform
 
@@ -155,5 +158,6 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
 
 
