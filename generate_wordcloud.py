@@ -176,8 +176,8 @@ try:
         wordcloud = WordCloud(
             font_path='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',
             background_color='white',
-            width=1600,
-            height=800
+            width=800,
+            height=400
         ).generate_from_frequencies(counter)
 
 
