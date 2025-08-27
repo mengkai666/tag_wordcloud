@@ -1,9 +1,9 @@
-name: Daily Movie Wordcloud Task
+name: Daily Wordcloud & HotStock Task
 
 on:
   schedule:
-     - cron: '15 7 * * *'
-  workflow_dispatch:
+    - cron: '15 7 * * *'   # 每天 07:15 UTC (北京时间 15:15) 自动运行
+  workflow_dispatch:        # 手动触发
 
 jobs:
   build:
@@ -13,11 +13,6 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v2
 
-    - name: Install Chinese font (for wordcloud)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y fonts-noto-cjk
-     
     - name: Install Chinese fonts
       run: |
         sudo apt-get update
@@ -31,11 +26,17 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Run script and check files
+    # 👉 运行第一个脚本
+    - name: Run generate_wordcloud.py
       run: |
         python generate_wordcloud.py
-        pwd
         ls -l stock_data1.xlsx wordcloud.png || echo "文件未生成"
+
+    # 👉 运行新增的 hotstock_wordcloud.py
+    - name: Run hotstock_wordcloud.py
+      run: |
+        python hotstock_wordcloud.py
+        ls -l HotStock_Top20_*.xlsx HotStock_WordCloud_*.png || echo "文件未生成"
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -44,13 +45,14 @@ jobs:
         path: |
           stock_data1.xlsx
           wordcloud.png
+          HotStock_Top20_*.xlsx
+          HotStock_WordCloud_*.png
 
     - name: Commit and push generated files
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-    
-        git add stock_data1.xlsx wordcloud.png
+
+        git add stock_data1.xlsx wordcloud.png HotStock_Top20_*.xlsx HotStock_WordCloud_*.png
         git commit -m "Auto-generated files on $(date '+%Y-%m-%d')"
         git push origin main
-
