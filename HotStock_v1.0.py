@@ -43,27 +43,33 @@ def fetch_cls_top20():
         print("❌ 财联社请求失败:", e)
         return []
 
+
 # ---------------- 东方财富 ----------------
 def fetch_eastmoney_top20():
-    import json
-    secids = "1.600410,0.002261,0.002131,0.002600,1.600111,0.002241,1.688256,1.600118,1.600010,0.002402," \
-             "0.002272,1.603019,0.002217,0.002555,0.002298,0.002456,1.600460,0.300059,1.601606,0.002681"
-    url = f"https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&np=3&ut=a79f54e3d4c8d44e494efb8f748db291&invt=2&secids={secids}&fields=f14"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+    url = "http://push2.eastmoney.com/api/qt/clist/get"
+    params = {
+        "pn": "1",   # 页数
+        "pz": "20",  # 每页数量
+        "po": "1",
+        "np": "1",
+        "ut": "bd1d9ddb04089700cf9c27f6f7426281",
+        "fltt": "2",
+        "invt": "2",
+        "fid": "f62",   # 按人气排序
+        "fs": "m:0+t:6,m:0+t:80",  # A股 主板+创业板
+        "fields": "f12,f14,f2,f3,f62"
     }
     try:
-        resp = requests.get(url, headers=headers, timeout=10)
-        resp.raise_for_status()
-        text = resp.text
-        if text.startswith("qa_wap_jsonpCB"):
-            text = text[text.find("(")+1:text.rfind(")")]
-        data = json.loads(text)
+        res = requests.get(url, params=params, timeout=10)
+        res.raise_for_status()
+        data = res.json()
         stocks = data.get("data", {}).get("diff", [])[:20]
-        return [item["f14"] for item in stocks]
+        # 返回股票名称列表（后续保存 Excel 用）
+        return [stock.get("f14", "--") for stock in stocks]
     except Exception as e:
         print("❌ 东方财富请求失败:", e)
         return []
+
 
 # ---------------- 同花顺 ----------------
 def fetch_ths_top20():
@@ -152,6 +158,7 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
 
 
 
