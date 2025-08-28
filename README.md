@@ -7,4 +7,4 @@
 
 # 同花顺 财联社  东财热门股统计
 
-![GitHub图像]( HotStock_WordCloud_20250827.png)
+![GitHub图像]( HotStock_WordCloud.png)
