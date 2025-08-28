@@ -46,26 +46,50 @@ def fetch_cls_top20():
 
 # ---------------- 东方财富 ----------------
 def fetch_eastmoney_top20():
-    url = "http://push2.eastmoney.com/api/qt/clist/get"
-    params = {
-        "pn": "1",   # 页数
-        "pz": "20",  # 每页数量
-        "po": "1",
-        "np": "1",
-        "ut": "bd1d9ddb04089700cf9c27f6f7426281",
-        "fltt": "2",
-        "invt": "2",
-        "fid": "f62",   # 按人气排序
-        "fs": "m:0+t:6,m:0+t:80",  # A股 主板+创业板
-        "fields": "f12,f14,f2,f3,f62"
+    url_rank = "https://emappdata.eastmoney.com/stockrank/getAllCurrentList"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/138.0.0.0 Mobile Safari/537.36",
+        "Referer": "https://vipmoney.eastmoney.com/",
+        "Origin": "https://vipmoney.eastmoney.com",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "rankType": "1",
+        "pageSize": 100,
+        "pageIndex": 1
     }
     try:
-        res = requests.get(url, params=params, timeout=10)
-        res.raise_for_status()
-        data = res.json()
-        stocks = data.get("data", {}).get("diff", [])[:20]
-        # 返回股票名称列表（后续保存 Excel 用）
-        return [stock.get("f14", "--") for stock in stocks]
+        resp = requests.post(url_rank, headers=headers, json=payload, timeout=10)
+        resp.raise_for_status()
+        data_rank_json = resp.json()
+        if not data_rank_json or "data" not in data_rank_json:
+            print("❌ 东方财富接口返回异常:", data_rank_json)
+            return []
+        data_rank = data_rank_json['data']
+        top20_codes = [item['sc'] for item in data_rank[:20]]
+
+        # 构造第二接口 secids
+        secids = ",".join([("1."+c[2:] if c.startswith("SH") else "0."+c[2:]) for c in top20_codes])
+        url_detail = "https://push2.eastmoney.com/api/qt/ulist.np/get"
+        params = {
+            "ut": "f057cbcbce2a86e2866ab8877db1d059",
+            "fltt": 2,
+            "invt": 2,
+            "fields": "f14,f12",
+            "secids": secids
+        }
+        resp_detail = requests.get(url_detail, params=params, timeout=10)
+        resp_detail.raise_for_status()
+        data_detail_json = resp_detail.json()
+        if not data_detail_json or "data" not in data_detail_json or "diff" not in data_detail_json['data']:
+            print("❌ 东方财富第二接口异常:", data_detail_json)
+            return []
+
+        data_detail = data_detail_json['data']['diff']
+        # 返回股票名称列表
+        return [stock['f14'] for stock in data_detail]
     except Exception as e:
         print("❌ 东方财富请求失败:", e)
         return []
@@ -158,6 +182,7 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
 
 
 
