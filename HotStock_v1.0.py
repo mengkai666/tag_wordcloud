@@ -122,7 +122,7 @@ def save_to_excel(cls_names, eastmoney_names, ths_names):
         "东方财富": eastmoney_names + [""] * (20 - len(eastmoney_names)),
         "同花顺": ths_names + [""] * (20 - len(ths_names))
     })
-    file_name = f"HotStock_Top20_{time.strftime('%Y%m%d')}.xlsx"
+    file_name = f"HotStock_Top20.xlsx"
     df.to_excel(file_name, index=False)
     print(f"✅ 已保存到 Excel：{file_name}")
     return file_name
@@ -169,7 +169,7 @@ def generate_wordcloud(file_path):
     plt.title("热门股票词云（按排名加权）", fontsize=16, fontproperties=font_prop)
 
 
-    img_path = f"HotStock_WordCloud_{time.strftime('%Y%m%d')}.png"
+    img_path = f"HotStock_WordCloud.png"
     plt.savefig(img_path, dpi=900, bbox_inches='tight')
     plt.show()
     print(f"✅ 图片已保存：{img_path}")
@@ -182,6 +182,7 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
 
 
 
