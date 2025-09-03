@@ -158,7 +158,7 @@ def generate_wordcloud(file_path):
     # 使用 FontProperties 指定字体
     plt.title("热门股票词云（按排名加权）", fontsize=16, fontproperties=font_prop)
 
-    img_path = f"HotStock_WordCloud_{time.strftime('%Y%m%d')}.png"
+    img_path = f"HotStock_WordCloud.png"
     plt.savefig(img_path, dpi=900, bbox_inches='tight')
     plt.show()
     print(f"✅ 图片已保存：{img_path}")
@@ -174,6 +174,7 @@ if __name__ == "__main__":
 
     excel_file = save_to_excel(cls_names, eastmoney_names, ths_names)
     generate_wordcloud(excel_file)
+
 
 
 
